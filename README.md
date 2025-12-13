@@ -40,3 +40,7 @@ QuickAsset is a desktop application for scanning networks and collecting asset i
 
 - The application uses `ping` and `arp` commands, so it works best on local networks.
 - MAC address retrieval relies on the ARP table, which is populated by the ping command.
+
+## License
+
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
