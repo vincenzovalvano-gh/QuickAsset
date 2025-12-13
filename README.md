@@ -2,6 +2,13 @@
 
 QuickAsset is a desktop application for scanning networks and collecting asset information.
 
+## Screenshots
+
+![Screenshot 1](screenshots/Screenshot%202025-12-13%20230814.png)
+![Screenshot 2](screenshots/Screenshot%202025-12-13%20230842.png)
+![Screenshot 3](screenshots/Screenshot%202025-12-13%20230914.png)
+![Screenshot 4](screenshots/Screenshot%202025-12-13%20231036.png)
+
 ## Features
 
 - **Immediate Scan**: Scan a network immediately.
