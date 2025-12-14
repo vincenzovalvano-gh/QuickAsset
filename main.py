@@ -9,7 +9,7 @@ import ipaddress
 # from scanner import NetworkScanner
 # from storage import StorageManager
 # from fingerprint_manager import FingerprintManager
-from utils import get_config_path, resource_path
+from utils import get_config_path, resource_path, get_app_path
 
 class QuickAssetApp:
     def __init__(self, root):
@@ -984,7 +984,7 @@ Quick Guide:
     def open_settings_window(self):
         settings_window = tk.Toplevel(self.root)
         settings_window.title("Settings")
-        self._center_window(settings_window, 400, 200)
+        self._center_window(settings_window, 450, 250)
         try:
             settings_window.iconbitmap(resource_path("app.ico"))
         except Exception:
@@ -996,9 +996,42 @@ Quick Guide:
         interval_spin = ttk.Spinbox(settings_window, from_=1, to=1440, textvariable=interval_var, width=10)
         interval_spin.pack()
 
-        # Nmap
-        use_nmap_var = tk.BooleanVar(value=self.use_nmap_setting)
-        ttk.Checkbutton(settings_window, text="Use Nmap", variable=use_nmap_var).pack(pady=5)
+        # Nmap Checks
+        app_path = get_app_path()
+        nmap_dir = os.path.join(app_path, "nmap")
+        nmap_exe = os.path.join(nmap_dir, "nmap.exe")
+        
+        nmap_exists = os.path.exists(nmap_dir) and os.path.exists(nmap_exe)
+        
+        # Check for Npcap (wpcap.dll in System32)
+        system32 = os.path.join(os.environ['WINDIR'], 'System32')
+        wpcap_path = os.path.join(system32, 'wpcap.dll')
+        npcap_installed = os.path.exists(wpcap_path)
+
+        nmap_allowed = nmap_exists and npcap_installed
+        
+        nmap_reason = ""
+        if not nmap_allowed:
+            reasons = []
+            if not nmap_exists:
+                reasons.append("Nmap missing")
+            if not npcap_installed:
+                reasons.append("Npcap missing")
+            nmap_reason = f"(Disabled: {', '.join(reasons)})"
+
+        # Nmap Checkbox
+        # If not allowed, force False
+        current_nmap_val = self.use_nmap_setting if nmap_allowed else False
+        use_nmap_var = tk.BooleanVar(value=current_nmap_val)
+        
+        nmap_frame = ttk.Frame(settings_window)
+        nmap_frame.pack(pady=5)
+        
+        chk_nmap = ttk.Checkbutton(nmap_frame, text="Use Nmap", variable=use_nmap_var, state=tk.NORMAL if nmap_allowed else tk.DISABLED)
+        chk_nmap.pack(side=tk.LEFT)
+        
+        if not nmap_allowed:
+            ttk.Label(nmap_frame, text=nmap_reason, foreground="red", font=("Arial", 8)).pack(side=tk.LEFT, padx=5)
 
         # Launch Excel
         launch_excel_var = tk.BooleanVar(value=self.launch_excel)
