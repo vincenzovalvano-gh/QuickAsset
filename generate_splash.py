@@ -30,8 +30,41 @@ def create_splash():
     text_width = bbox[2] - bbox[0]
     text_height = bbox[3] - bbox[1]
     
-    x = (width - text_width) // 2
-    y = (height - text_height) // 2 - 20
+    # Try to load and place icon
+    icon_width = 0
+    spacing = 15
+    try:
+        if os.path.exists("app.ico"):
+            icon = Image.open("app.ico").convert("RGBA")
+            # Resize icon to match text height roughly or a bit larger
+            icon_size = 48
+            icon = icon.resize((icon_size, icon_size), Image.Resampling.LANCZOS)
+            icon_width = icon_size
+            
+            # Calculate total content width
+            total_width = icon_width + spacing + text_width
+            
+            # Starting X position to center the whole block (icon + text)
+            start_x = (width - total_width) // 2
+            
+            # Y position for text (centered vertically roughly)
+            y = (height - text_height) // 2 - 20
+            
+            # Y position for icon (centered relative to text)
+            # text_height is approx 40-50px. icon is 48.
+            icon_y = y + (text_height - icon_size) // 2
+            
+            img.paste(icon, (start_x, icon_y), icon)
+            
+            # Text X position
+            x = start_x + icon_width + spacing
+        else:
+            x = (width - text_width) // 2
+            y = (height - text_height) // 2 - 20
+    except Exception as e:
+        print(f"Error adding icon: {e}")
+        x = (width - text_width) // 2
+        y = (height - text_height) // 2 - 20
     
     draw.text((x, y), text, font=font_large, fill=text_color)
     

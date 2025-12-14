@@ -3,3 +3,4 @@ openpyxl
 scapy
 pyinstaller
 python-nmap
+pywin32

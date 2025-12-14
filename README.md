@@ -9,18 +9,20 @@ QuickAsset is a desktop application for scanning networks and collecting asset i
 
 ## Screenshots
 
-![Screenshot 1](screenshots/Screenshot%202025-12-13%20230814.png)
-![Screenshot 2](screenshots/Screenshot%202025-12-13%20230842.png)
-![Screenshot 3](screenshots/Screenshot%202025-12-13%20230914.png)
-![Screenshot 4](screenshots/Screenshot%202025-12-13%20231036.png)
+![QuickAsset Demo](screenshots/sshot.gif)
 
 ## Features
 
 - **Immediate Scan**: Scan a network immediately.
-- **Continuous Scan**: Scan a network repeatedly every 5 minutes.
-- **Data Collection**: Collects IP, Hostname, MAC Address, Host Type, and OS (if available).
-- **Export**: Export results to XLSX and CSV.
-- **Storage**: Saves results to JSON files.
+- **Continuous Scan**: Scan a network repeatedly at configurable intervals.
+- **Data Collection**: Collects IP, Hostname, MAC Address, Vendor, Host Type, and OS.
+- **Scan Preview**: View detailed results in a dedicated window with sorting capabilities.
+- **Print Reports**: Print professional scan reports directly from the application.
+- **Export**: Export results to XLSX and CSV formats.
+- **Scan History**: Automatically saves scan history; view, export, or delete past scans.
+- **Fingerprint Management**: Customize and manage device identification (MAC/Vendor/OS mapping).
+- **Clear Scan**: Quickly clear current results from the interface.
+- **User Interface**: Clean UI with menu bar for easy access to tools and settings.
 
 ## Requirements
 
@@ -41,18 +43,22 @@ QuickAsset is a desktop application for scanning networks and collecting asset i
 1. Run the application:
    ```bash
    python main.py
-   or find dist\QuickAsset.exe x64 Windows binary
+   # or run the compiled executable in dist\QuickAsset.exe
    ```
 2. Enter the network CIDR (e.g., `192.168.1.0/24`).
-3. Click "Scan" for a one-time scan or "Start Scan" for continuous scanning.
-4. View results in the log area.
-5. Click "Export to XLSX" or "Export to CSV" to save the results.
+3. (Optional) Enter a label for the scan (e.g., "MyOffice").
+4. Click "Scan (Immediate)" for a one-time scan or "Start Scan (Continuous)" for repeated scanning.
+5. View results in the log area or click "View Scan" for a detailed table.
+6. Use "Export to XLSX" or "Export to CSV" to save the results.
+7. Access "Scan History" or "Manage Fingerprints" from the interface or Tools menu.
 
 ## Notes
 
 - The application uses `ping` and `arp` commands, so it works best on local networks.
-- MAC address retrieval relies on the ARP table, which is populated by the ping command.
+- MAC address retrieval relies on the ARP table.
+- Nmap integration is available for enhanced detection (configurable in Settings).
 
 ## License
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
+

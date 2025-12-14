@@ -7,8 +7,8 @@ import re
 import time
 import os
 import sys
-import nmap
-from scapy.all import conf, arping
+# import nmap
+# from scapy.all import conf, arping
 from concurrent.futures import ThreadPoolExecutor
 from fingerprint_manager import FingerprintManager
 from utils import get_app_path
@@ -35,12 +35,10 @@ class NetworkScanner:
     def __init__(self):
         self.os_name = platform.system()
         self.fingerprinter = FingerprintManager()
-        # Load scapy manuf db if not loaded
-        if not conf.manufdb:
-            try:
-                conf.manufdb.reload()
-            except:
-                pass
+        self.scapy_loaded = False
+        self.nmap_loaded = False
+        self.nm = None
+        self.use_nmap = False
         
         # Add local nmap folder to PATH
         app_path = get_app_path()
@@ -48,14 +46,31 @@ class NetworkScanner:
         if os.path.exists(local_nmap):
             os.environ["PATH"] += os.pathsep + local_nmap
 
-        try:
-            self.nm = nmap.PortScanner()
-            self.use_nmap = True
-        except Exception as e:
-            print(f"Nmap not available: {e}")
-            self.use_nmap = False
+    def _ensure_scapy(self):
+        if not self.scapy_loaded:
+            global conf, arping
+            from scapy.all import conf, arping
+            # Load scapy manuf db if not loaded
+            if not conf.manufdb:
+                try:
+                    conf.manufdb.reload()
+                except:
+                    pass
+            self.scapy_loaded = True
+
+    def _ensure_nmap(self):
+        if not self.nmap_loaded:
+            try:
+                import nmap
+                self.nm = nmap.PortScanner()
+                self.use_nmap = True
+            except Exception as e:
+                print(f"Nmap not available: {e}")
+                self.use_nmap = False
+            self.nmap_loaded = True
 
     def get_vendor(self, mac):
+        self._ensure_scapy()
         try:
             vendor = conf.manufdb._get_manuf(mac)
             if vendor == mac:
@@ -124,6 +139,9 @@ class NetworkScanner:
         """
         Scans the given network CIDR using Scapy for discovery and Nmap for fingerprinting.
         """
+        self._ensure_scapy()
+        self._ensure_nmap()
+        
         try:
             # 1. Scapy ARP Discovery (Fast)
             # print(f"Starting ARP scan on {network_cidr}...")
@@ -218,6 +236,9 @@ class NetworkScanner:
         # Normalize MAC to uppercase
         if mac:
             mac = mac.upper()
+
+        if stop_event.is_set():
+            return
 
         result = {
             "IP Address": ip,

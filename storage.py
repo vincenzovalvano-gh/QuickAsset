@@ -1,7 +1,6 @@
 import json
 import os
 import ipaddress
-import pandas as pd
 import datetime
 from utils import get_app_path
 
@@ -178,6 +177,7 @@ class StorageManager:
         results.sort(key=ip_sort_key)
         
         try:
+            import pandas as pd
             df = pd.DataFrame(results)
             
             # Ensure column order
@@ -246,6 +246,7 @@ class StorageManager:
         results.sort(key=ip_sort_key)
         
         try:
+            import pandas as pd
             df = pd.DataFrame(results)
             
             # Ensure column order
