@@ -29,7 +29,7 @@ QuickAsset is a desktop application for scanning networks and collecting asset i
 - Python 3.x
 - Dependencies listed in `requirements.txt`
 - **Npcap**: Required for Nmap scanning. Download and install npcap-installer.exe found in the Release
-  **Nmap**: Required for Nmap scanning. Download nmap.zip found in the Release, unzip and place nmap folder in the same directory of the exe file.
+- **Nmap**: Required for Nmap scanning. Download nmap.zip found in the Release, unzip and place nmap folder in the same directory of the exe file.
 
 ## Installation
 
@@ -44,7 +44,7 @@ QuickAsset is a desktop application for scanning networks and collecting asset i
 1. Run the application:
    ```bash
    python main.py
-   # or run the compiled executable in dist\QuickAsset.exe
+   # or run the compiled executable QuickAsset.exe
    ```
 2. Enter the network CIDR (e.g., `192.168.1.0/24`).
 3. (Optional) Enter a label for the scan (e.g., "MyOffice").
