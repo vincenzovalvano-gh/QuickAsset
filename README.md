@@ -15,12 +15,14 @@ QuickITAsset is a desktop application for scanning networks and collecting asset
 
 - **Immediate Scan**: Scan a network immediately.
 - **Continuous Scan**: Scan a network repeatedly at configurable intervals.
+- **Resume Scan**: Resume a previous continuous scan from the history.
 - **Data Collection**: Collects IP, Hostname, MAC Address, Vendor, Host Type, and OS.
 - **Scan Preview**: View detailed results in a dedicated window with sorting capabilities.
 - **Print Reports**: Print professional scan reports directly from the application.
 - **Export**: Export results to XLSX and CSV formats.
-- **Scan History**: Automatically saves scan history; view, export, or delete past scans.
-- **Fingerprint Management**: Customize and manage device identification (MAC/Vendor/OS mapping).
+- **Scan History**: Automatically saves scan history; view, export, delete, or resume past scans.
+- **Fingerprint Management**: Customize device identification. Supports in-place editing and tooltips for open ports.
+- **System Tray**: Minimizes to the system tray to keep scanning in the background.
 - **Clear Scan**: Quickly clear current results from the interface.
 - **User Interface**: Clean UI with menu bar for easy access to tools and settings.
 
